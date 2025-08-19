@@ -1,0 +1,6 @@
+playwright
+requests
+python-dotenv
+fastapi
+uvicorn[standard]
+tzdata

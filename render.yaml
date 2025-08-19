@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: insta-monitor
+    env: docker
+    plan: free
+    healthCheckPath: /healthz

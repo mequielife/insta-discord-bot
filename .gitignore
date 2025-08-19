@@ -1,0 +1,5 @@
+.env
+.last_*.json
+__pycache__/
+playwright/.cache/
+*.pyc
