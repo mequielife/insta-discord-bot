@@ -1,20 +1,17 @@
-FROM python:3.11-slim
+# Imagem oficial do Playwright (Ubuntu Jammy) já com Chromium e deps
+FROM mcr.microsoft.com/playwright/python:v1.46.0-jammy
 
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
 
-# deps Python
+# Instala apenas suas libs de app (o Playwright já vem instalado na imagem)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Playwright + Chromium + dependências do SO
-RUN python -m playwright install --with-deps chromium
-
-# copia seu código
+# Copia o código
 COPY . .
 
-# Render injeta a variável PORT; subimos o servidor FastAPI
+# Sobe o servidor FastAPI; Render injeta $PORT
 CMD bash -lc 'uvicorn server:app --host 0.0.0.0 --port ${PORT:-10000}'
